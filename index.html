@@ -2,57 +2,64 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Which Beyonce?</title>
+    <title>Which Muffin?</title>
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <nav class="nav">
-      <button class="nav-button" type="button" name="button"></button>
-      <h1 class="nav-header"></h1>
+      <button class="nav__button" type="button" name="button"></button>
+      <h1 class="nav__header">Which Muffin?</h1>
     </nav>
-    <section>
-      <input type="text" name="" value="">
-      <label for=""></label>
-      <input type="text" name="" value="">
-      <label for=""></label>
-      <button type="button" name="button"></button>
-    </section>
-    <article class="">
-      <h1></h1>
-      <p></p>
-      <p></p>
-      <p></p>
-      <button type="button" name="button"></button>
-    </article>
-    <section>
-      <section>
-        <h2></h2>
-        <p></p>
-        <div class="">
-          <p></p>
-          <p></p>
+    <div class="center">
+      <section class="intro">
+        <div class="label-align">
+          <input class="intro__input--player1" type="text" name="player1-name" value="">
+          <label for="">player 1</label>
         </div>
-        <ul>
-          <li></li>
-          <li></li>
-          <li></li>
-        </ul>
+        <div class="label-align">
+          <input class="intro__input--player2" type="text" name="player1-name" value="">
+          <label for="">player 2</label>
+        </div>
+        <button class="intro__button--play" type="button" name="play">Play Game</button>
       </section>
-      <section>
+      <article class="instructions hidden">
+        <h1 class="instructions__header"></h1>
+        <p class="instructions__paragraph"></p>
+        <p class="instructions__paragraph"></p>
+        <p class="instructions__paragraph"></p>
+        <button class="instructions__button" type="button" name="button"></button>
+      </article>
+      <section class="game hidden">
+        <section class="player1">
+          <h2 class="player1__h2"></h2>
+          <p></p>
+          <div class="player1__div">
+            <p class="player1__p"></p>
+            <p class="player1__matches"></p>
+          </div>
+          <ul class="player1_list">
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+        </section>
+        <section>
 
-      </section>
-      <section>
-        <h2></h2>
-        <p></p>
-        <div class="">
+        </section>
+        <section>
+          <h2></h2>
           <p></p>
-          <p></p>
-        </div>
-        <ul>
-          <li></li>
-          <li></li>
-          <li></li>
-        </ul>
+          <div class="">
+            <p></p>
+            <p></p>
+          </div>
+          <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+        </section>
       </section>
-    </section>
+    </div>
   </body>
 </html>
