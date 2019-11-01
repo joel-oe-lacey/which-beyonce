@@ -1,5 +1,6 @@
 * {
   margin: 0px;
+  box-sizing: border-box;
 }
 
 body {
@@ -46,7 +47,7 @@ body {
 
 nav {
   width: 100%;
-  height: 10vh;
+  height: 7vh;
   display: flex;
   justify-content: flex-start;
   background-color: white;
@@ -70,6 +71,9 @@ nav button {
   height: 100%;
   background-color: black;
   color: white;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
 }
 
 .player1 {
@@ -80,18 +84,125 @@ nav button {
   grid-area: player2;
 }
 
+.player1 *,
+.player2 * {
+  padding: 5% 0% 5% 0%;
+}
+
+.player1 dt,
+.player2 dt {
+  text-align: center;
+}
+
+.player1__matches,
+.player2__matches {
+  font-size: 3em;
+  font-weight: bolder;
+}
+
+.player1__p,
+.player2__p {
+  font-size: 1.5em;
+}
+
+.player1__div,
+.player2__div {
+  border-color: grey;
+  border-style: solid;
+  border-width: 2px 0px 2px 0px;
+  padding: 15% 0% 15% 0%;
+  text-align: center;
+  width: 80%;
+}
+
+.player1__list,
+.player2__list {
+  list-style: none;
+}
+
 .cards {
   grid-area: cards;
-  height: 80vh;
+  background-color: white;
+  height: 86vh;
+  display: grid;
+  grid-template-areas:
+    "card-1 card-1 card-1 card-2 card-2 card-3 card-3 card-3"
+    "card-4 card-4 card-5 card-5 card-6 card-6 card-7 card-7"
+    "card-8 card-8 card-8 card-9 card-9 card-10 card-10 card-10";
+  grid-column-gap: 2em;
+  padding: 3%;
+}
+
+.cards button {
+  background-image: url("assets/muffin.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 2px solid black;
+  height: 22vh;
+  width: 17vh;
+  margin: 3% 6% 3% 5%;
+}
+
+.card-1 {
+  transform: rotateZ(13deg);
+  grid-area: card-1;
+  justify-self: end;
+}
+
+.card-2 {
+  transform: rotateZ(-9deg);
+  grid-area: card-2;
+}
+
+.card-3 {
+  transform: rotateZ(12deg);
+  grid-area: card-3;
+}
+
+.card-4 {
+  transform: rotateZ(4deg);
+  grid-area: card-4;
+}
+
+.card-5 {
+  transform: rotateZ(-12deg);
+  grid-area: card-5;
+}
+
+.card-6 {
+  transform: rotateZ(13deg);
+  grid-area: card-6;
+}
+
+.card-7 {
+  transform: rotateZ(13deg);
+  grid-area: card-7;
+}
+
+.card-8 {
+  transform: rotateZ(-8deg);
+  grid-area: card-8;
+  justify-self: end;
+}
+
+.card-9 {
+  transform: rotateZ(13deg);
+  grid-area: card-9;
+}
+
+.card-10 {
+  transform: rotateZ(-6deg);
+  grid-area: card-10;
 }
 
 .game {
-  margin: 2%;
-  width: 95%;
+  margin: 1%;
+  width: 98%;
+  height: 100%;
   display: grid;
   grid-template-areas:
     "player1 cards player2";
-  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-columns: 1fr 4.5fr 1fr;
 }
 
 .hidden {
