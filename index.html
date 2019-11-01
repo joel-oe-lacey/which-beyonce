@@ -2,16 +2,18 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Which Muffin?</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,700&display=swap" rel="stylesheet">
   </head>
   <body>
     <nav class="nav">
       <button class="nav__button" type="button" name="button"></button>
       <h1 class="nav__header">Which Muffin?</h1>
     </nav>
-    <div class="center">
-      <section class="intro hidden">
+    <div class="center hidden">
+      <section class="intro">
         <div class="label-align">
           <input class="intro__input--player1" type="text" name="player1-name" value="">
           <label for="">player 1</label>
@@ -29,37 +31,38 @@
         <p class="instructions__paragraph">After you play, you’ll see the name of the final winner and how long it took to win the game.</p>
         <button class="instructions__button" type="button" name="button">Play Game</button>
       </article>
-      <section class="game hidden">
-        <section class="player1">
-          <h2 class="player1__h2"></h2>
-          <p></p>
-          <div class="player1__div">
-            <p class="player1__p"></p>
-            <p class="player1__matches"></p>
-          </div>
-          <ul class="player1_list">
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
-        </section>
-        <section>
-
-        </section>
-        <section>
-          <h2></h2>
-          <p></p>
-          <div class="">
-            <p></p>
-            <p></p>
-          </div>
-          <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
-        </section>
-      </section>
     </div>
+    <section class="game">
+      <section class="player1">
+        <h2 class="player1__h2">PLAYER 1 NAME</h2>
+        <p>#4 TOP PLAYER</p>
+        <div class="player1__div">
+          <p class="player1__p">MATCHES THIS ROUND</p>
+          <p class="player1__matches">5</p>
+        </div>
+        <ul class="player1_list">
+          <li><h3>Game Wins</h3></li>
+          <li>Round 1</li>
+          <li>Round 4</li>
+          <li></li>
+        </ul>
+      </section>
+      <section class="cards">
+      </section>
+      <section class="player2">
+        <h2 class="player2__h2">PLAYER 2 NAME</h2>
+        <p class="hidden"></p>
+        <div class="player2__div">
+          <p class="player2__p">MATCHES THIS ROUND</p>
+          <p class="player2__matches">3</p>
+        </div>
+        <ul class="player2_list">
+          <li><h3>Game Wins</h3></li>
+          <li>Round 2</li>
+          <li>Round 3</li>
+          <li>Round 5</li>
+        </ul>
+      </section>
+    </section>
   </body>
 </html>

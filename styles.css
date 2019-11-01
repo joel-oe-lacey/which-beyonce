@@ -6,6 +6,7 @@ body {
   display: flex;
   flex-flow: column wrap;
   align-items: center;
+  font-family: 'Open Sans';
   background-image: linear-gradient( rgba(232,232,232,.7), rgba(232,232,232,.7) ), url("assets/muffin-background.jpg");
 }
 
@@ -62,6 +63,35 @@ nav h1 {
 nav button {
   width: 5%;
   background-color: black;
+}
+
+.player1,
+.player2 {
+  height: 100%;
+  background-color: black;
+  color: white;
+}
+
+.player1 {
+  grid-area: player1;
+}
+
+.player2 {
+  grid-area: player2;
+}
+
+.cards {
+  grid-area: cards;
+  height: 80vh;
+}
+
+.game {
+  margin: 2%;
+  width: 95%;
+  display: grid;
+  grid-template-areas:
+    "player1 cards player2";
+  grid-template-columns: 1fr 3fr 1fr;
 }
 
 .hidden {
