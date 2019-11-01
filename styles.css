@@ -1,0 +1,236 @@
+* {
+  margin: 0px;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  font-family: 'Open Sans';
+  background-image: linear-gradient( rgba(232,232,232,.7), rgba(232,232,232,.7) ), url("assets/muffin-background.jpg");
+}
+
+.center {
+  width: 60%;
+  height: 80vh;
+}
+
+.intro,
+.instructions {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+.results {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+.results h1 {
+  margin-top: 20%;
+}
+
+.intro input {
+  width: 100%;
+  height: 5vh;
+}
+
+.intro button,
+.instructions button {
+  width: 100%;
+  height: 5vh;
+  background-color: black;
+  color: white;
+}
+
+.results button {
+  width: 30%;
+  height: 5vh;
+  background-color: black;
+  color: white;
+}
+
+.button-align {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.label-align {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 45%;
+}
+
+nav {
+  width: 100%;
+  height: 7vh;
+  display: flex;
+  justify-content: flex-start;
+  background-color: white;
+  /* box-shadow: 5px 5px grey; */
+}
+
+nav h1 {
+  align-self: center;
+  margin-left: 38%;
+  font-size: 2em;
+}
+
+nav button {
+  width: 5%;
+  background-color: black;
+  background-image: url("assets/menu.svg");
+}
+
+.player1,
+.player2 {
+  height: 100%;
+  background-color: black;
+  color: white;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+}
+
+.player1 {
+  grid-area: player1;
+}
+
+.player2 {
+  grid-area: player2;
+}
+
+.player1 *,
+.player2 * {
+  padding: 5% 0% 5% 0%;
+}
+
+.player1 dt,
+.player2 dt {
+  text-align: center;
+}
+
+.player1__matches,
+.player2__matches {
+  font-size: 3em;
+  font-weight: bolder;
+}
+
+.player1__p,
+.player2__p {
+  font-size: 1.5em;
+}
+
+.player1__div,
+.player2__div {
+  border-color: grey;
+  border-style: solid;
+  border-width: 2px 0px 2px 0px;
+  padding: 15% 0% 15% 0%;
+  text-align: center;
+  width: 80%;
+}
+
+.player1__list,
+.player2__list {
+  list-style: none;
+}
+
+.cards {
+  grid-area: cards;
+  background-color: white;
+  height: 86vh;
+  display: grid;
+  grid-template-areas:
+    "card-1 card-1 card-1 card-2 card-2 card-3 card-3 card-3"
+    "card-4 card-4 card-5 card-5 card-6 card-6 card-7 card-7"
+    "card-8 card-8 card-8 card-9 card-9 card-10 card-10 card-10";
+  grid-column-gap: 2em;
+  padding: 3%;
+}
+
+.cards button {
+  background-image: url("assets/muffin.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 2px solid black;
+  height: 22vh;
+  width: 17vh;
+  margin: 3% 6% 3% 5%;
+}
+
+.card-1 {
+  transform: rotateZ(13deg);
+  grid-area: card-1;
+  justify-self: end;
+}
+
+.card-2 {
+  transform: rotateZ(-9deg);
+  grid-area: card-2;
+}
+
+.card-3 {
+  transform: rotateZ(12deg);
+  grid-area: card-3;
+}
+
+.card-4 {
+  transform: rotateZ(4deg);
+  grid-area: card-4;
+}
+
+.card-5 {
+  transform: rotateZ(-12deg);
+  grid-area: card-5;
+}
+
+.card-6 {
+  transform: rotateZ(13deg);
+  grid-area: card-6;
+}
+
+.card-7 {
+  transform: rotateZ(13deg);
+  grid-area: card-7;
+}
+
+.card-8 {
+  transform: rotateZ(-8deg);
+  grid-area: card-8;
+  justify-self: end;
+}
+
+.card-9 {
+  transform: rotateZ(13deg);
+  grid-area: card-9;
+}
+
+.card-10 {
+  transform: rotateZ(-6deg);
+  grid-area: card-10;
+}
+
+.game {
+  margin: 1%;
+  width: 98%;
+  height: 100%;
+  display: grid;
+  grid-template-areas:
+    "player1 cards player2";
+  grid-template-columns: 1fr 4.5fr 1fr;
+}
+
+.hidden {
+  display: none;
+}

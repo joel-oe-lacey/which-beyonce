@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Which Muffin?</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="nav">
+      <button class="nav__button" type="button" name="button"></button>
+      <h1 class="nav__header">Which Muffin?</h1>
+    </nav>
+    <div class="center">
+      <section class="intro">
+        <div class="label-align">
+          <input class="intro__input--player1" type="text" name="player1-name" value="">
+          <label for="">player 1</label>
+        </div>
+        <div class="label-align">
+          <input class="intro__input--player2" type="text" name="player1-name" value="">
+          <label for="">player 2</label>
+        </div>
+        <button class="intro__button--play" type="button" name="play">Play Game</button>
+      </section>
+      <article class="instructions hidden">
+        <h1 class="instructions__header">Welcome Player 1 Name and Player 2 Name!</h1>
+        <p class="instructions__paragraph">The goal of the game is to find all 5 pairs of cards as quickly as possible. The player that finds the greatest numbers of pairs, wins.</p>
+        <p class="instructions__paragraph">To begin playing, the player whose name is highlighted can click any card in the card pile. It will flip over and reveal a picture of Beyoncé. Click another card. If they match, they will disappear and you will have completed a match! If they don’t, you’ll have three seconds to look at them before they flip back over. Then it’s time for the other player to try!</p>
+        <p class="instructions__paragraph">After you play, you’ll see the name of the final winner and how long it took to win the game.</p>
+        <button class="instructions__button" type="button" name="button">Play Game</button>
+      </article>
+      <article class="results hidden">
+        <h1 class="results__header">Congratulations, Player 1 wins!</h1>
+        <h3 class="results__paragraph">It took you 7000000 seconds.</h3>
+        <p class="results__paragraph">Click below to keep playing</p>
+        <div class="button-align">
+          <button class="results__button--newgame" type="button" name="button">New Game</button>
+          <button class="results__button--rematch" type="button" name="button">Rematch</button>
+        </div>
+      </article>
+    </div>
+    <section class="game hidden">
+      <section class="player1">
+        <h2 class="player1__h2">PLAYER 1 NAME</h2>
+        <p>#4 TOP PLAYER</p>
+        <div class="player1__div">
+          <p class="player1__p">MATCHES THIS ROUND</p>
+          <p class="player1__matches">5</p>
+        </div>
+        <dl class="player1__list">
+          <dt><h3>GAME WINS</h3></dt>
+          <dt>ROUND 1</dt>
+          <dd>124.5 SECONDS</dd>
+          <dt>ROUND 4</dt>
+          <dd>64.9 SECONDS</dd>
+        </dl>
+      </section>
+      <section class="cards">
+        <button class="card-1" type="button" name="button"></button>
+        <button class="card-2" type="button" name="button"></button>
+        <button class="card-3" type="button" name="button"></button>
+        <button class="card-4" type="button" name="button"></button>
+        <button class="card-5" type="button" name="button"></button>
+        <button class="card-6" type="button" name="button"></button>
+        <button class="card-7" type="button" name="button"></button>
+        <button class="card-8" type="button" name="button"></button>
+        <button class="card-9" type="button" name="button"></button>
+        <button class="card-10" type="button" name="button"></button>
+      </section>
+      <section class="player2">
+        <h2 class="player2__h2">PLAYER 2 NAME</h2>
+        <p class="hidden"></p>
+        <div class="player2__div">
+          <p class="player2__p">MATCHES THIS ROUND</p>
+          <p class="player2__matches">3</p>
+        </div>
+        <dl class="player2__list">
+          <dt><h3>GAME WINS</h3></dt>
+          <dt>ROUND 3</dt>
+          <dd>84.3 SECONDS</dd>
+          <dt>ROUND 6</dt>
+          <dd>67.2 SECONDS</dd>
+        </dl>
+      </section>
+    </section>
+  </body>
+</html>
