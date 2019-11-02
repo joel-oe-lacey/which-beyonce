@@ -159,14 +159,47 @@ nav button {
   padding: 3%;
 }
 
-.cards button {
-  background-image: url("assets/muffin.svg");
-  background-position: center;
-  background-repeat: no-repeat;
+.card {
   border: 2px solid black;
+  background-color: transparent;
+  perspective: 1000px;
   height: 22vh;
   width: 17vh;
   margin: 3% 6% 3% 5%;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.flip {
+  transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+	backface-visibility: hidden;
+	position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.card-front {
+  background-image: url("assets/muffin.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.card-back {
+	transform: rotateY(180deg);
+  background-image: url("assets/chihuahua-1.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .card-1 {
