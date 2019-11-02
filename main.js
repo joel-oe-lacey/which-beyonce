@@ -8,9 +8,13 @@ var instructionPlay = document.querySelector('.instructions__button--play');
 var centerDiv = document.querySelector('.center');
 var game = document.querySelector('.game');
 var gamePlayer1Header = document.querySelector('.player1__h2');
+var cardSection = document.querySelector('.cards');
 
-playerSubmit.addEventListener("click", checkNameInput);
-instructionPlay.addEventListener("click", showGame);
+playerSubmit.addEventListener('click', checkNameInput);
+instructionPlay.addEventListener('click', showGame);
+cardSection.addEventListener('click', function() {
+  cardClickHandler(event);
+});
 
 function checkNameInput() {
   if (player1Input.validity.valueMissing) {
@@ -39,3 +43,7 @@ function showGame() {
   gamePlayer1Header.innerText = `${player1Name}`;
   game.classList.remove('hidden');
 };
+
+function cardClickHandler(event) {
+  event.target.parentNode.classList.add('flip');
+}
