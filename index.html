@@ -13,9 +13,9 @@
       <h1 class="nav__header">Which Muffin?</h1>
     </nav>
     <div class="center">
-      <section class="intro">
+      <form class="intro">
         <div class="label-align">
-          <input class="intro__input--player1" type="text" name="player1-name" value="" required minlength="0" maxlength="32">
+          <input class="intro__input--player1" type="text" name="player1-name" value="" required data-value-missing="This field is required!" maxlength="32">
           <label for="">player 1</label>
         </div>
         <div class="label-align">
@@ -23,7 +23,7 @@
           <label for="">player 2</label>
         </div>
         <button class="intro__button--play" type="button" name="play">Play Game</button>
-      </section>
+      </form>
       <article class="instructions hidden">
         <h1 class="instructions__header">Welcome Player 1 Name and Player 2 Name!</h1>
         <p class="instructions__paragraph">The goal of the game is to find all 5 pairs of cards as quickly as possible. The player that finds the greatest numbers of pairs, wins.</p>
@@ -86,4 +86,9 @@
       </section>
     </section>
   </body>
+  <footer>
+    <script src="card.js"></script>
+    <script src="deck.js"></script>
+    <script src="main.js"></script>
+  </footer>
 </html>
