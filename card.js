@@ -1,7 +1,7 @@
 class Card {
-  constructor(cardNum) {
+  constructor(cardNum, pairID) {
     this.cardNum = cardNum;
-    this.pairID = (this.cardNum/2).ceil();
+    this.pairID = pairID;
     this.matched = false;
     this.cardBackground = "";
   }

@@ -47,3 +47,32 @@ function showGame() {
 function cardClickHandler(event) {
   event.target.parentNode.classList.add('flip');
 }
+
+function pickRandomNum(range) {
+  return Math.floor(Math.random() * range);
+}
+
+function generateCardIds(card) {
+  var randNum = pickRandomNum(10);
+
+  card.cardNum = randNum;
+  card.pairID = (card.cardNum/2).ceil();
+}
+
+function loadCards() {
+  for(var i = 0; i < 10; i++) {
+    
+  }
+}
+
+function addCards(card) {
+return game.innerHTML +=
+        `<div class="card card-${card.cardNum}" data-cardNum=${card.cardNum} data-pairId=${card.pairID}>
+          <div class="card-inner">
+            <div class="card-front">
+            </div>
+            <div class="card-back">
+            </div>
+          </div>
+        </div>``
+};
