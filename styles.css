@@ -181,6 +181,10 @@ nav button {
   transform: rotateY(180deg);
 }
 
+.flip-back {
+  transform: rotateY(-180deg);
+}
+
 .card-front, .card-back {
 	backface-visibility: hidden;
 	position: absolute;
@@ -189,7 +193,7 @@ nav button {
 }
 
 .card-front {
-  background-image: url("assets/muffin.svg");
+  /* background-image: url("assets/muffin.svg"); */
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -202,54 +206,54 @@ nav button {
   background-size: cover;
 }
 
-.card-1 {
+.card-0 {
   transform: rotateZ(13deg);
   grid-area: card-1;
   justify-self: end;
 }
 
-.card-2 {
+.card-1 {
   transform: rotateZ(-9deg);
   grid-area: card-2;
 }
 
-.card-3 {
+.card-2 {
   transform: rotateZ(12deg);
   grid-area: card-3;
 }
 
-.card-4 {
+.card-3 {
   transform: rotateZ(4deg);
   grid-area: card-4;
 }
 
-.card-5 {
+.card-4 {
   transform: rotateZ(-12deg);
   grid-area: card-5;
 }
 
-.card-6 {
+.card-5 {
   transform: rotateZ(13deg);
   grid-area: card-6;
 }
 
-.card-7 {
+.card-6 {
   transform: rotateZ(13deg);
   grid-area: card-7;
 }
 
-.card-8 {
+.card-7 {
   transform: rotateZ(-8deg);
   grid-area: card-8;
   justify-self: end;
 }
 
-.card-9 {
+.card-8 {
   transform: rotateZ(13deg);
   grid-area: card-9;
 }
 
-.card-10 {
+.card-9 {
   transform: rotateZ(-6deg);
   grid-area: card-10;
 }
@@ -266,4 +270,10 @@ nav button {
 
 .hidden {
   display: none;
+}
+
+.no-display {
+  opacity: 0;
+  transition: opacity .25s ease-in-out;
+  pointer-events: none;
 }
