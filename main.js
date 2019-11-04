@@ -9,6 +9,7 @@ var centerDiv = document.querySelector('.center');
 var game = document.querySelector('.game');
 var gamePlayer1Header = document.querySelector('.player1__h2');
 var cardSection = document.querySelector('.cards');
+var selectedCount = 0;
 
 playerSubmit.addEventListener('click', checkNameInput);
 instructionPlay.addEventListener('click', showGame);
@@ -45,34 +46,13 @@ function showGame() {
 };
 
 function cardClickHandler(event) {
-  event.target.parentNode.classList.add('flip');
-}
+  if (event.target.parentNode.parentNode.classList.contains('card')) {
+    if(selectedCount < 2) {
+    event.target.parentNode.classList.add('flip');
+    selectedCount++;
+  }
 
-function pickRandomNum(range) {
-  return Math.floor(Math.random() * range);
-}
-
-function generateCardIds(card) {
-  var randNum = pickRandomNum(10);
-
-  card.cardNum = randNum;
-  card.pairID = (card.cardNum/2).ceil();
-}
-
-function loadCards() {
-  for(var i = 0; i < 10; i++) {
-    
+    // event.target.parentNode.parentNode.dataset.cardnum
+    // event.target.parentNode.parentNode.dataset.pairID
   }
 }
-
-function addCards(card) {
-return game.innerHTML +=
-        `<div class="card card-${card.cardNum}" data-cardNum=${card.cardNum} data-pairId=${card.pairID}>
-          <div class="card-inner">
-            <div class="card-front">
-            </div>
-            <div class="card-back">
-            </div>
-          </div>
-        </div>``
-};
