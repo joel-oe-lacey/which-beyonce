@@ -10,6 +10,8 @@ var game = document.querySelector('.game');
 var gamePlayer1Header = document.querySelector('.player1__h2');
 var cardSection = document.querySelector('.cards');
 var player1Matches = document.querySelector('.player1__matches');
+var results = document.querySelector('.results');
+var resultsHeader = document.querySelector('.results__header');
 var deck = new Deck();
 
 playerSubmit.addEventListener('click', checkNameInput);
@@ -47,6 +49,13 @@ function showGame() {
   game.classList.remove('hidden');
 };
 
+function showResult() {
+  resultsHeader.innerText = `Congratulations, ${player1Name} wins!`;
+  game.classList.add('hidden');
+  centerDiv.classList.remove('hidden');
+  results.classList.remove('hidden');
+}
+
 function cardClickHandler(event) {
   if (event.target.parentNode.parentNode.classList.contains('card') ) {
     var cardClicked = parseInt(event.target.parentNode.parentNode.dataset.cardnum);
@@ -59,7 +68,11 @@ function cardClickHandler(event) {
       var matchResult = deck.checkSelectedCards();
       //this is refreshing page before second card gets chosen. need to rework.
       if(matchResult) {
+        if(deck.matches === 5) {
+        showResult();
+        } else {
         cardRefresh();
+        }
       } else {
         setTimeout(function() {
           resetCards(event)
