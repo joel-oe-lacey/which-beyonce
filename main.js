@@ -70,11 +70,11 @@ function calculateGameTime() {
 }
 
 function cardClickHandler(event) {
-  if (event.target.parentNode.parentNode.classList.contains('card') ) {
+  if (event.target.parentNode.parentNode.classList.contains('card')) {
     var cardClicked = parseInt(event.target.parentNode.parentNode.dataset.cardnum);
     var clickedPairID = parseInt(event.target.parentNode.parentNode.dataset.pairid);
 
-    if (deck.selectedCards.length === 1) {
+    if (deck.selectedCards.length === 1 && (cardClicked !== deck.selectedCards[0].cardNum)) {
       event.target.parentNode.classList.add('flip');
       deck.addToSelected(cardClicked, clickedPairID);
       //need to add a set timeout so the card doesn't remove immediately, have a 2 second pause
