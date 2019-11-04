@@ -13,10 +13,12 @@ var player1Matches = document.querySelector('.player1__matches');
 var results = document.querySelector('.results');
 var resultsHeader = document.querySelector('.results__header');
 var resultsTime = document.querySelector('.results__time');
+var newGameBtn = document.querySelector('.results__button--newgame');
 var deck = new Deck();
 
 playerSubmit.addEventListener('click', checkNameInput);
 instructionPlay.addEventListener('click', showGame);
+newGameBtn.addEventListener('click', restartGame);
 cardSection.addEventListener('click', function() {
   cardClickHandler(event);
 });
@@ -68,6 +70,18 @@ function showResult() {
   game.classList.add('hidden');
   centerDiv.classList.remove('hidden');
   results.classList.remove('hidden');
+}
+
+function restartGame() {
+  deck = new Deck();
+  cardSection.innerHTML = '';
+  player1Matches.innerText = 0;
+  initialCardLoad();
+  initialCardDisplay();
+  gameStartTime = Date.now();
+  results.classList.add('hidden');
+  centerDiv.classList.add('hidden');
+  game.classList.remove('hidden');
 }
 
 function calculateGameTime() {
@@ -143,8 +157,9 @@ function generateCardIds(card, cardNum) {
 
 function pageLoadHandler() {
   if(checkNamePersistence()) {
-    showInstructions()
+    showInstructions();
   }
+  player1Matches.innerText = 0;
   initialCardLoad();
   initialCardDisplay();
 }
