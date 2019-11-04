@@ -9,6 +9,7 @@ var centerDiv = document.querySelector('.center');
 var game = document.querySelector('.game');
 var gamePlayer1Header = document.querySelector('.player1__h2');
 var cardSection = document.querySelector('.cards');
+var player1Matches = document.querySelector('.player1__matches');
 var deck = new Deck();
 
 playerSubmit.addEventListener('click', checkNameInput);
@@ -107,7 +108,7 @@ function initialCardLoad() {
 }
 
 function cardRefresh() {
-  debugger;
+  player1Matches.innerText = deck.matches;
   cardSection.innerHTML = "";
   for(var i = 0; i < deck.cards.length; i++) {
     if(deck.cards[i].matched) {
