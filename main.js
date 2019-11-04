@@ -12,6 +12,7 @@ var cardSection = document.querySelector('.cards');
 var player1Matches = document.querySelector('.player1__matches');
 var results = document.querySelector('.results');
 var resultsHeader = document.querySelector('.results__header');
+var resultsTime = document.querySelector('.results__time');
 var deck = new Deck();
 
 playerSubmit.addEventListener('click', checkNameInput);
@@ -43,6 +44,7 @@ function showInstructions() {
 };
 
 function showGame() {
+  gameStartTime = Date.now();
   instructions.classList.add('hidden');
   centerDiv.classList.add('hidden');
   gamePlayer1Header.innerText = `${player1Name}`;
@@ -50,10 +52,21 @@ function showGame() {
 };
 
 function showResult() {
+  resultsTime.innerText = calculateGameTime();
   resultsHeader.innerText = `Congratulations, ${player1Name} wins!`;
   game.classList.add('hidden');
   centerDiv.classList.remove('hidden');
   results.classList.remove('hidden');
+}
+
+function calculateGameTime() {
+  var gameEndTime = Date.now();
+  var totalGameTime = Math.floor((gameEndTime - gameStartTime) / 1000);
+
+  var minutes = Math.floor(totalGameTime / 60);
+  var seconds = totalGameTime % 60;
+
+  return `It took you ${minutes} minutes and ${seconds} seconds.`;
 }
 
 function cardClickHandler(event) {
