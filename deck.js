@@ -18,15 +18,33 @@ class Deck {
       this.selectedCards = [];
       return false;
     }
-  }
+  };
+
+  addToSelected(cardClicked, clickedPairID) {
+   for (var i = 0; i < this.cards.length; i++) {
+     if(this.cards[i].cardNum === cardClicked) {
+       this.selectedCards.push(this.cards[i]);
+     }
+   }
+ };
 
   moveToMatched(card1, card2) {
     this.matchedCards.push(card1, card2);
-    this.selectedCards = [];
-  }
+    //add class so it doesn't break card alignment, but then they can still target these cards?
 
-  refreshCardDeck() {
-    //filter out matched cards from cards array, would keep card array in alignment
-    // is this even necessary if the DOM element is removed so a user couldn't click on the card anyway?
-  }
+    //instead of doing this just remove card from card array and refresh whole DOM
+    this.removeFromDeck(this.selectedCards[0]);
+    this.removeFromDeck(this.selectedCards[1]);
+    this.selectedCards = [];
+    this.matches++;
+  };
+
+  removeFromDeck(removedCard) {
+    //instead of removing them totally, set their matched property to true, and then if the card.matched is true add but hide and set pointer events to none, so it cant be clicked on
+    for (var i = 0; i < this.cards.length; i++) {
+      if(this.cards[i].cardNum === removedCard) {
+        this.cards[i].match(true);
+      }
+    }
+  };
 }

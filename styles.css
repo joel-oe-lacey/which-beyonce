@@ -189,7 +189,7 @@ nav button {
 }
 
 .card-front {
-  background-image: url("assets/muffin.svg");
+  /* background-image: url("assets/muffin.svg"); */
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -266,4 +266,9 @@ nav button {
 
 .hidden {
   display: none;
+}
+
+.no-display {
+  opacity: 0;
+  transition: opacity .25s ease-in-out;
 }

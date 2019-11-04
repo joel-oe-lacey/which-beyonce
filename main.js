@@ -48,28 +48,42 @@ function showGame() {
 
 function cardClickHandler(event) {
   if (event.target.parentNode.parentNode.classList.contains('card') ) {
+    var cardClicked = parseInt(event.target.parentNode.parentNode.dataset.cardnum);
+    var clickedPairID = parseInt(event.target.parentNode.parentNode.dataset.pairid);
+
     if (deck.selectedCards.length === 1) {
-      var cardClicked = parseInt(event.target.parentNode.parentNode.dataset.cardnum);
-      var clickedPairID = parseInt(event.target.parentNode.parentNode.dataset.pairid);
-      addToSelected(cardClicked, clickedPairID);
-      deck.checkSelectedCards();
       event.target.parentNode.classList.add('flip');
+      deck.addToSelected(cardClicked, clickedPairID);
+      //need to add a set timeout so the card doesn't remove immediately, have a 2 second pause
+      deck.checkSelectedCards();
+
     } else if (deck.selectedCards.length === 0) {
-      var cardClicked = parseInt(event.target.parentNode.parentNode.dataset.cardnum);
-      var clickedPairID = parseInt(event.target.parentNode.parentNode.dataset.pairid);
-      addToSelected(cardClicked, clickedPairID);
+      deck.addToSelected(cardClicked, clickedPairID);
       event.target.parentNode.classList.add('flip');
     }
   }
 }
 
-function addToSelected(cardClicked, clickedPairID) {
-  for (var i = 0; i < deck.cards.length; i++) {
-    if(deck.cards[i].cardNum === cardClicked) {
-      deck.selectedCards.push(deck.cards[i]);
-    }
-  }
-}
+// function pairHandler(matchResult, event) {
+//   if(matchResult) {
+//     //this would only remove most recent card
+//     //go the route of refreshing whole card HTML?
+//     event.target.parentNode.parentNode.remove();
+//   } else {
+//     //reverse target items on the DOM based on whats in matchedCards array?
+//     //if you get that working don't need to refresh whole HTML.
+//   }
+//
+// }
+
+//move this as a deck method
+// function addToSelected(cardClicked, clickedPairID) {
+//   for (var i = 0; i < deck.cards.length; i++) {
+//     if(deck.cards[i].cardNum === cardClicked) {
+//       deck.selectedCards.push(deck.cards[i]);
+//     }
+//   }
+// }
 
 function pickRandomNum(range) {
   return Math.ceil(Math.random() * range);
@@ -77,7 +91,7 @@ function pickRandomNum(range) {
 
 function generateCardIds(card, cardNum) {
   // var randNum = pickRandomNum(10);
-
+  //this is creating a 0 and 5, not two 5s
   card.cardNum = cardNum;
   card.pairID = Math.ceil(cardNum/2);
 }
@@ -96,6 +110,7 @@ function addCards(card) {
         `<div class="card card-${card.cardNum}" data-cardNum=${card.cardNum} data-pairId=${card.pairID}>
           <div class="card-inner">
             <div class="card-front">
+            <p>${card.pairID}</p>
             </div>
             <div class="card-back">
             </div>
