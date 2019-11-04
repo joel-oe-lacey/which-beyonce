@@ -181,6 +181,10 @@ nav button {
   transform: rotateY(180deg);
 }
 
+.flip-back {
+  transform: rotateY(-180deg);
+}
+
 .card-front, .card-back {
 	backface-visibility: hidden;
 	position: absolute;

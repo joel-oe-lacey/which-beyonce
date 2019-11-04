@@ -29,6 +29,7 @@ class Deck {
  };
 
   moveToMatched(card1, card2) {
+    //make sure it can't matched with itself
     this.matchedCards.push(card1, card2);
     //add class so it doesn't break card alignment, but then they can still target these cards?
 

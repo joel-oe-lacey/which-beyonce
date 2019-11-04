@@ -56,8 +56,15 @@ function cardClickHandler(event) {
       event.target.parentNode.classList.add('flip');
       deck.addToSelected(cardClicked, clickedPairID);
       //need to add a set timeout so the card doesn't remove immediately, have a 2 second pause
-      deck.checkSelectedCards();
-      cardRefresh();
+      var matchResult = deck.checkSelectedCards();
+      //this is refreshing page before second card gets chosen. need to rework.
+      if(matchResult) {
+        cardRefresh();
+      } else {
+        setTimeout(function() {
+          resetCards(event)
+        }, 1000);
+      }
 
     } else if (deck.selectedCards.length === 0) {
       deck.addToSelected(cardClicked, clickedPairID);
@@ -78,14 +85,17 @@ function cardClickHandler(event) {
 //
 // }
 
-//move this as a deck method
-// function addToSelected(cardClicked, clickedPairID) {
-//   for (var i = 0; i < deck.cards.length; i++) {
-//     if(deck.cards[i].cardNum === cardClicked) {
-//       deck.selectedCards.push(deck.cards[i]);
-//     }
-//   }
-// }
+function resetCards(event) {
+  //target whole card section
+  //iterate through cards (childreNode)
+  var presentCards = cardSection.children;
+  for (var i = 0; i < presentCards.length; i++) {
+    if (presentCards[i].childNodes[1].classList.contains('flip')) {
+      presentCards[i].childNodes[1].classList.remove('flip');
+    }
+  }
+  // event.target.parentNode.classList.add('flip-back');
+}
 
 function pickRandomNum(range) {
   return Math.ceil(Math.random() * range);
