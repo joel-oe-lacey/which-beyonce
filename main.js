@@ -10,12 +10,14 @@ var game = document.querySelector('.game');
 var gamePlayer1Header = document.querySelector('.player1__h2');
 var cardSection = document.querySelector('.cards');
 var selectedCount = 0;
+var deck = new Deck();
 
 playerSubmit.addEventListener('click', checkNameInput);
 instructionPlay.addEventListener('click', showGame);
 cardSection.addEventListener('click', function() {
   cardClickHandler(event);
 });
+window.onload = loadCards;
 
 function checkNameInput() {
   if (player1Input.validity.valueMissing) {
@@ -46,8 +48,12 @@ function showGame() {
 };
 
 function cardClickHandler(event) {
-  if (event.target.parentNode.parentNode.classList.contains('card')) {
-    if(selectedCount < 2) {
+  if (event.target.parentNode.parentNode.classList.contains('card') ) {
+    if(deck.selectedCards.length < 2) {
+    var cardClicked = parseInt(event.target.parentNode.parentNode.dataset.cardnum);
+    var clickedPairID = parseInt(event.target.parentNode.parentNode.dataset.pairid);
+    addToSelected(cardClicked, clickedPairID);
+
     event.target.parentNode.classList.add('flip');
     selectedCount++;
   }
@@ -56,3 +62,43 @@ function cardClickHandler(event) {
     // event.target.parentNode.parentNode.dataset.pairID
   }
 }
+
+function addToSelected(cardClicked, clickedPairID) {
+  for (var i = 0; i < deck.cards.length; i++) {
+    if(deck.cards[i].cardNum === cardClicked) {
+      deck.selectedCards.push(deck.cards[i]);
+    }
+  }
+}
+
+function pickRandomNum(range) {
+  return Math.ceil(Math.random() * range);
+}
+
+function generateCardIds(card, cardNum) {
+  // var randNum = pickRandomNum(10);
+
+  card.cardNum = cardNum;
+  card.pairID = Math.ceil(cardNum/2);
+}
+
+function loadCards() {
+  for(var i = 0; i < 10; i++) {
+    var card = new Card();
+    generateCardIds(card, i);
+    deck.cards.push(card);
+    addCards(card);
+  }
+}
+
+function addCards(card) {
+  return cardSection.innerHTML +=
+        `<div class="card card-${card.cardNum}" data-cardNum=${card.cardNum} data-pairId=${card.pairID}>
+          <div class="card-inner">
+            <div class="card-front">
+            </div>
+            <div class="card-back">
+            </div>
+          </div>
+        </div>`
+};
