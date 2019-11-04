@@ -9,7 +9,6 @@ var centerDiv = document.querySelector('.center');
 var game = document.querySelector('.game');
 var gamePlayer1Header = document.querySelector('.player1__h2');
 var cardSection = document.querySelector('.cards');
-var selectedCount = 0;
 var deck = new Deck();
 
 playerSubmit.addEventListener('click', checkNameInput);
@@ -49,17 +48,18 @@ function showGame() {
 
 function cardClickHandler(event) {
   if (event.target.parentNode.parentNode.classList.contains('card') ) {
-    if(deck.selectedCards.length < 2) {
-    var cardClicked = parseInt(event.target.parentNode.parentNode.dataset.cardnum);
-    var clickedPairID = parseInt(event.target.parentNode.parentNode.dataset.pairid);
-    addToSelected(cardClicked, clickedPairID);
-
-    event.target.parentNode.classList.add('flip');
-    selectedCount++;
-  }
-
-    // event.target.parentNode.parentNode.dataset.cardnum
-    // event.target.parentNode.parentNode.dataset.pairID
+    if (deck.selectedCards.length === 1) {
+      var cardClicked = parseInt(event.target.parentNode.parentNode.dataset.cardnum);
+      var clickedPairID = parseInt(event.target.parentNode.parentNode.dataset.pairid);
+      addToSelected(cardClicked, clickedPairID);
+      deck.checkSelectedCards();
+      event.target.parentNode.classList.add('flip');
+    } else if (deck.selectedCards.length === 0) {
+      var cardClicked = parseInt(event.target.parentNode.parentNode.dataset.cardnum);
+      var clickedPairID = parseInt(event.target.parentNode.parentNode.dataset.pairid);
+      addToSelected(cardClicked, clickedPairID);
+      event.target.parentNode.classList.add('flip');
+    }
   }
 }
 
