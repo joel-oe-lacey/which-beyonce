@@ -37,11 +37,22 @@ function checkNameInput() {
 };
 
 function showInstructions() {
-  player1Name = player1Input.value;
+  if(checkNamePersistence()) {
+    player1Name = localStorage.getItem('player1Name');
+  } else {
+    player1Name = player1Input.value;
+    var jsonObject = JSON.stringify(player1Name);
+    localStorage.setItem('player1Name', jsonObject);
+  }
   instructionHeader.innerText = `Welcome ${player1Name} and Player 2 Name!`;
   nameIntro.classList.add('hidden');
   instructions.classList.remove('hidden');
 };
+
+function storeItem(item) {
+  var jsonObject = JSON.stringify(item);
+  localStorage.setItem(this.id, jsonObject);
+}
 
 function showGame() {
   gameStartTime = Date.now();
@@ -99,17 +110,13 @@ function cardClickHandler(event) {
   }
 }
 
-// function pairHandler(matchResult, event) {
-//   if(matchResult) {
-//     //this would only remove most recent card
-//     //go the route of refreshing whole card HTML?
-//     event.target.parentNode.parentNode.remove();
-//   } else {
-//     //reverse target items on the DOM based on whats in matchedCards array?
-//     //if you get that working don't need to refresh whole HTML.
-//   }
-//
-// }
+function checkNamePersistence() {
+  if(localStorage.getItem('player1Name')) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 function resetCards(event) {
   //target whole card section
@@ -135,6 +142,9 @@ function generateCardIds(card, cardNum) {
 }
 
 function pageLoadHandler() {
+  if(checkNamePersistence()) {
+    showInstructions()
+  }
   initialCardLoad();
   initialCardDisplay();
 }
