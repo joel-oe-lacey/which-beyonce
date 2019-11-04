@@ -10,6 +10,9 @@ var game = document.querySelector('.game');
 var gamePlayer1Header = document.querySelector('.player1__h2');
 var cardSection = document.querySelector('.cards');
 var player1Matches = document.querySelector('.player1__matches');
+var results = document.querySelector('.results');
+var resultsHeader = document.querySelector('.results__header');
+var resultsTime = document.querySelector('.results__time');
 var deck = new Deck();
 
 playerSubmit.addEventListener('click', checkNameInput);
@@ -17,7 +20,7 @@ instructionPlay.addEventListener('click', showGame);
 cardSection.addEventListener('click', function() {
   cardClickHandler(event);
 });
-window.onload = initialCardLoad;
+window.onload = pageLoadHandler;
 
 function checkNameInput() {
   if (player1Input.validity.valueMissing) {
@@ -41,25 +44,48 @@ function showInstructions() {
 };
 
 function showGame() {
+  gameStartTime = Date.now();
   instructions.classList.add('hidden');
   centerDiv.classList.add('hidden');
   gamePlayer1Header.innerText = `${player1Name}`;
   game.classList.remove('hidden');
 };
 
+function showResult() {
+  resultsTime.innerText = calculateGameTime();
+  resultsHeader.innerText = `Congratulations, ${player1Name} wins!`;
+  game.classList.add('hidden');
+  centerDiv.classList.remove('hidden');
+  results.classList.remove('hidden');
+}
+
+function calculateGameTime() {
+  var gameEndTime = Date.now();
+  var totalGameTime = Math.floor((gameEndTime - gameStartTime) / 1000);
+
+  var minutes = Math.floor(totalGameTime / 60);
+  var seconds = totalGameTime % 60;
+
+  return `It took you ${minutes} minutes and ${seconds} seconds.`;
+}
+
 function cardClickHandler(event) {
-  if (event.target.parentNode.parentNode.classList.contains('card') ) {
+  if (event.target.parentNode.parentNode.classList.contains('card')) {
     var cardClicked = parseInt(event.target.parentNode.parentNode.dataset.cardnum);
     var clickedPairID = parseInt(event.target.parentNode.parentNode.dataset.pairid);
 
-    if (deck.selectedCards.length === 1) {
+    if (deck.selectedCards.length === 1 && (cardClicked !== deck.selectedCards[0].cardNum)) {
       event.target.parentNode.classList.add('flip');
       deck.addToSelected(cardClicked, clickedPairID);
       //need to add a set timeout so the card doesn't remove immediately, have a 2 second pause
       var matchResult = deck.checkSelectedCards();
       //this is refreshing page before second card gets chosen. need to rework.
       if(matchResult) {
+        if(deck.matches === 5) {
+        showResult();
+        } else {
         cardRefresh();
+        }
       } else {
         setTimeout(function() {
           resetCards(event)
@@ -108,12 +134,24 @@ function generateCardIds(card, cardNum) {
   card.pairID = Math.ceil((cardNum+1)/2);
 }
 
+function pageLoadHandler() {
+  initialCardLoad();
+  initialCardDisplay();
+}
+
 function initialCardLoad() {
   for(var i = 0; i < 10; i++) {
     var card = new Card();
     generateCardIds(card, i);
     deck.cards.push(card);
-    addCard(card);
+  }
+  deck.shuffle();
+}
+
+function initialCardDisplay() {
+  for(var i = 0; i < 10; i++) {
+    var card = deck.cards[i];
+    addCard(card, i);
   }
 }
 
@@ -122,16 +160,16 @@ function cardRefresh() {
   cardSection.innerHTML = "";
   for(var i = 0; i < deck.cards.length; i++) {
     if(deck.cards[i].matched) {
-      addHiddenCard(deck.cards[i]);
+      addHiddenCard(deck.cards[i], i);
     } else {
-      addCard(deck.cards[i]);
+      addCard(deck.cards[i], i);
     }
   }
 }
 
-function addCard(card) {
+function addCard(card, index) {
   return cardSection.innerHTML +=
-        `<div class="card card-${card.cardNum}" data-cardNum=${card.cardNum} data-pairId=${card.pairID}>
+        `<div class="card card-${index}" data-cardnum=${card.cardNum} data-pairid=${card.pairID}>
           <div class="card-inner">
             <div class="card-front">
             <p>${card.cardNum}</p>
@@ -143,9 +181,9 @@ function addCard(card) {
         </div>`
 };
 
-function addHiddenCard(card) {
+function addHiddenCard(card, index) {
   return cardSection.innerHTML +=
-        `<div class="card card-${card.cardNum} no-display" data-cardNum=${card.cardNum} data-pairId=${card.pairID}>
+        `<div class="card card-${index} no-display" data-cardNum=${card.cardNum} data-pairId=${card.pairID}>
           <div class="card-inner">
             <div class="card-front">
             <p>${card.cardNum}</p>
