@@ -7,7 +7,16 @@ class Deck {
   }
 
   shuffle() {
+    var cards = this.cards, temporaryValue, randomIndex;
 
+    for(var i = 9; i > 0; i--) {
+      randomIndex = Math.floor(Math.random() * i);
+      temporaryValue = cards[i];
+      cards[i] = cards[randomIndex];
+      cards[randomIndex] = temporaryValue;
+    }
+
+    this.cards = cards;
   }
 
   checkSelectedCards() {

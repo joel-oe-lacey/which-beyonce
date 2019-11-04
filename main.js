@@ -20,7 +20,7 @@ instructionPlay.addEventListener('click', showGame);
 cardSection.addEventListener('click', function() {
   cardClickHandler(event);
 });
-window.onload = initialCardLoad;
+window.onload = pageLoadHandler;
 
 function checkNameInput() {
   if (player1Input.validity.valueMissing) {
@@ -134,12 +134,24 @@ function generateCardIds(card, cardNum) {
   card.pairID = Math.ceil((cardNum+1)/2);
 }
 
+function pageLoadHandler() {
+  initialCardLoad();
+  initialCardDisplay();
+}
+
 function initialCardLoad() {
   for(var i = 0; i < 10; i++) {
     var card = new Card();
     generateCardIds(card, i);
     deck.cards.push(card);
-    addCard(card);
+  }
+  deck.shuffle();
+}
+
+function initialCardDisplay() {
+  for(var i = 0; i < 10; i++) {
+    var card = deck.cards[i];
+    addCard(card, i);
   }
 }
 
@@ -148,16 +160,16 @@ function cardRefresh() {
   cardSection.innerHTML = "";
   for(var i = 0; i < deck.cards.length; i++) {
     if(deck.cards[i].matched) {
-      addHiddenCard(deck.cards[i]);
+      addHiddenCard(deck.cards[i], i);
     } else {
-      addCard(deck.cards[i]);
+      addCard(deck.cards[i], i);
     }
   }
 }
 
-function addCard(card) {
+function addCard(card, index) {
   return cardSection.innerHTML +=
-        `<div class="card card-${card.cardNum}" data-cardNum=${card.cardNum} data-pairId=${card.pairID}>
+        `<div class="card card-${index}" data-cardnum=${card.cardNum} data-pairid=${card.pairID}>
           <div class="card-inner">
             <div class="card-front">
             <p>${card.cardNum}</p>
@@ -169,9 +181,9 @@ function addCard(card) {
         </div>`
 };
 
-function addHiddenCard(card) {
+function addHiddenCard(card, index) {
   return cardSection.innerHTML +=
-        `<div class="card card-${card.cardNum} no-display" data-cardNum=${card.cardNum} data-pairId=${card.pairID}>
+        `<div class="card card-${index} no-display" data-cardNum=${card.cardNum} data-pairId=${card.pairID}>
           <div class="card-inner">
             <div class="card-front">
             <p>${card.cardNum}</p>
