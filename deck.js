@@ -42,7 +42,7 @@ class Deck {
   removeFromDeck(removedCard) {
     //instead of removing them totally, set their matched property to true, and then if the card.matched is true add but hide and set pointer events to none, so it cant be clicked on
     for (var i = 0; i < this.cards.length; i++) {
-      if(this.cards[i].cardNum === removedCard) {
+      if(this.cards[i].cardNum === removedCard.cardNum) {
         this.cards[i].match(true);
       }
     }

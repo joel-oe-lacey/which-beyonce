@@ -16,7 +16,7 @@ instructionPlay.addEventListener('click', showGame);
 cardSection.addEventListener('click', function() {
   cardClickHandler(event);
 });
-window.onload = loadCards;
+window.onload = initialCardLoad;
 
 function checkNameInput() {
   if (player1Input.validity.valueMissing) {
@@ -56,6 +56,7 @@ function cardClickHandler(event) {
       deck.addToSelected(cardClicked, clickedPairID);
       //need to add a set timeout so the card doesn't remove immediately, have a 2 second pause
       deck.checkSelectedCards();
+      cardRefresh();
 
     } else if (deck.selectedCards.length === 0) {
       deck.addToSelected(cardClicked, clickedPairID);
@@ -93,23 +94,50 @@ function generateCardIds(card, cardNum) {
   // var randNum = pickRandomNum(10);
   //this is creating a 0 and 5, not two 5s
   card.cardNum = cardNum;
-  card.pairID = Math.ceil(cardNum/2);
+  card.pairID = Math.ceil((cardNum+1)/2);
 }
 
-function loadCards() {
+function initialCardLoad() {
   for(var i = 0; i < 10; i++) {
     var card = new Card();
     generateCardIds(card, i);
     deck.cards.push(card);
-    addCards(card);
+    addCard(card);
   }
 }
 
-function addCards(card) {
+function cardRefresh() {
+  debugger;
+  cardSection.innerHTML = "";
+  for(var i = 0; i < deck.cards.length; i++) {
+    if(deck.cards[i].matched) {
+      addHiddenCard(deck.cards[i]);
+    } else {
+      addCard(deck.cards[i]);
+    }
+  }
+}
+
+function addCard(card) {
   return cardSection.innerHTML +=
         `<div class="card card-${card.cardNum}" data-cardNum=${card.cardNum} data-pairId=${card.pairID}>
           <div class="card-inner">
             <div class="card-front">
+            <p>${card.cardNum}</p>
+            <p>${card.pairID}</p>
+            </div>
+            <div class="card-back">
+            </div>
+          </div>
+        </div>`
+};
+
+function addHiddenCard(card) {
+  return cardSection.innerHTML +=
+        `<div class="card card-${card.cardNum} no-display" data-cardNum=${card.cardNum} data-pairId=${card.pairID}>
+          <div class="card-inner">
+            <div class="card-front">
+            <p>${card.cardNum}</p>
             <p>${card.pairID}</p>
             </div>
             <div class="card-back">
