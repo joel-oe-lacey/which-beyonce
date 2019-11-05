@@ -14,12 +14,14 @@ var results = document.querySelector('.results');
 var resultsHeader = document.querySelector('.results__header');
 var resultsTime = document.querySelector('.results__time');
 var newGameBtn = document.querySelector('.results__button--newgame');
+var rematchBtn = document.querySelector('.results__button--rematch');
 var deck = new Deck();
 var leaderBoardData = [];
 
 playerSubmit.addEventListener('click', checkNameInput);
 instructionPlay.addEventListener('click', showGame);
-newGameBtn.addEventListener('click', restartGame);
+newGameBtn.addEventListener('click', newGame);
+rematchBtn.addEventListener('click', rematch);
 cardSection.addEventListener('click', function() {
   cardClickHandler(event);
 });
@@ -39,7 +41,7 @@ function checkNameInput() {
   // }
 };
 
-function showInstructions() {
+function showInstructions(loadType) {
   if(checkNamePersistence()) {
     player1Name = JSON.parse(localStorage.getItem('player1Name'));
   } else {
@@ -47,6 +49,7 @@ function showInstructions() {
     var jsonObject = JSON.stringify(player1Name);
     localStorage.setItem('player1Name', jsonObject);
   }
+  player1Input.value = '';
   instructionHeader.innerText = `Welcome ${player1Name} and Player 2 Name!`;
   nameIntro.classList.add('hidden');
   instructions.classList.remove('hidden');
@@ -70,18 +73,29 @@ function showResult() {
   results.classList.remove('hidden');
 };
 
-function restartGame() {
+function rematch() {
+  resetGameData();
+  gameStartTime = Date.now();
+  results.classList.add('hidden');
+  centerDiv.classList.add('hidden');
+  game.classList.remove('hidden');
+};
+
+function newGame() {
+  resetGameData();
+  localStorage.removeItem('player1Name');
+  results.classList.add('hidden');
+  nameIntro.classList.remove('hidden');
+}
+
+function resetGameData() {
   deck = new Deck();
   cardSection.innerHTML = '';
   player1Matches.innerText = 0;
   initialCardLoad();
   initialCardDisplay();
   fetchLeaderBoard();
-  gameStartTime = Date.now();
-  results.classList.add('hidden');
-  centerDiv.classList.add('hidden');
-  game.classList.remove('hidden');
-};
+}
 
 function storeLeaderBoard(name, time) {
   var leaders = {
