@@ -64,7 +64,7 @@ function showResult() {
   var roundTime = calculateGameTime();
   resultsTime.innerText = formatTimeResult(roundTime);
   resultsHeader.innerText = `Congratulations, ${player1Name} wins!`;
-  leaderBoard('store',player1Name,roundTime);
+  storeLeaderBoard(player1Name,roundTime);
   game.classList.add('hidden');
   centerDiv.classList.remove('hidden');
   results.classList.remove('hidden');
@@ -76,33 +76,39 @@ function restartGame() {
   player1Matches.innerText = 0;
   initialCardLoad();
   initialCardDisplay();
+  fetchLeaderBoard();
   gameStartTime = Date.now();
   results.classList.add('hidden');
   centerDiv.classList.add('hidden');
   game.classList.remove('hidden');
 };
 
-function leaderBoard(action, name, time) {
+function storeLeaderBoard(name, time) {
   var leaders = {
     name:name,
     time:time
   }
 
-  if(action === 'store') {
-    var leaderJson = JSON.stringify(leaders);
-    localStorage.setItem(leaders.name,leaderJson);
-  } else {
-    leaderBoardData = [];
-    for (var i = 0; i < localStorage.length; i++) {
-      fetchedLeader = JSON.parse(localStorage.getItem(i));
-      if(fetchedLeader !== player1Name) {
-      leaderBoardData.push(fetchedLeader);
-      }
-    }
-  }
+  var leaderJson = JSON.stringify(leaders);
+  localStorage.setItem(leaders.name,leaderJson);
 };
 
-//use .keys method to get all keys, make that an array loop based on length of that
+function fetchLeaderBoard() {
+  leaderBoardData = [];
+  for (var i = 0; i < localStorage.length; i++) {
+    fetchedLeader = JSON.parse(localStorage.getItem(i));
+    if(fetchedLeader !== player1Name) {
+    leaderBoardData.push(fetchedLeader);
+    }
+  }
+  sortLeaderBoard();
+}
+
+function sortLeaderBoard() {
+  leaderBoardData.sort(function(a, b) {
+    return parseInt(leaderBoardData.time) - parseInt(leaderBoardData.time);
+  });
+}
 
 function calculateGameTime() {
   var gameEndTime = Date.now();
@@ -184,6 +190,7 @@ function pageLoadHandler() {
   player1Matches.innerText = 0;
   initialCardLoad();
   initialCardDisplay();
+  fetchLeaderBoard();
 }
 
 function initialCardLoad() {
