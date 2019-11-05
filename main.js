@@ -15,6 +15,7 @@ var resultsHeader = document.querySelector('.results__header');
 var resultsTime = document.querySelector('.results__time');
 var newGameBtn = document.querySelector('.results__button--newgame');
 var deck = new Deck();
+var leaderBoardData = [];
 
 playerSubmit.addEventListener('click', checkNameInput);
 instructionPlay.addEventListener('click', showGame);
@@ -40,7 +41,7 @@ function checkNameInput() {
 
 function showInstructions() {
   if(checkNamePersistence()) {
-    player1Name = localStorage.getItem('player1Name');
+    player1Name = JSON.parse(localStorage.getItem('player1Name'));
   } else {
     player1Name = player1Input.value;
     var jsonObject = JSON.stringify(player1Name);
@@ -51,11 +52,6 @@ function showInstructions() {
   instructions.classList.remove('hidden');
 };
 
-function storeItem(item) {
-  var jsonObject = JSON.stringify(item);
-  localStorage.setItem(this.id, jsonObject);
-}
-
 function showGame() {
   gameStartTime = Date.now();
   instructions.classList.add('hidden');
@@ -65,12 +61,14 @@ function showGame() {
 };
 
 function showResult() {
-  resultsTime.innerText = calculateGameTime();
+  var roundTime = calculateGameTime();
+  resultsTime.innerText = formatTimeResult(roundTime);
   resultsHeader.innerText = `Congratulations, ${player1Name} wins!`;
+  leaderBoard('store',player1Name,roundTime);
   game.classList.add('hidden');
   centerDiv.classList.remove('hidden');
   results.classList.remove('hidden');
-}
+};
 
 function restartGame() {
   deck = new Deck();
@@ -82,12 +80,36 @@ function restartGame() {
   results.classList.add('hidden');
   centerDiv.classList.add('hidden');
   game.classList.remove('hidden');
-}
+};
+
+function leaderBoard(action, name, time) {
+  var leaders = {
+    name:name,
+    time:time
+  }
+
+  if(action === 'store') {
+    var leaderJson = JSON.stringify(leaders);
+    localStorage.setItem(leaders.name,leaderJson);
+  } else {
+    leaderBoardData = [];
+    for (var i = 0; i < localStorage.length; i++) {
+      fetchedLeader = JSON.parse(localStorage.getItem(i));
+      if(fetchedLeader !== player1Name) {
+      leaderBoardData.push(fetchedLeader);
+      }
+    }
+  }
+};
+
+//use .keys method to get all keys, make that an array loop based on length of that
 
 function calculateGameTime() {
   var gameEndTime = Date.now();
-  var totalGameTime = Math.floor((gameEndTime - gameStartTime) / 1000);
+  return totalGameTime = Math.floor((gameEndTime - gameStartTime) / 1000);
+}
 
+function formatTimeResult(time) {
   var minutes = Math.floor(totalGameTime / 60);
   var seconds = totalGameTime % 60;
 
