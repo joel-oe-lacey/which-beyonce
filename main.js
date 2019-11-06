@@ -30,16 +30,11 @@ window.onload = pageLoadHandler;
 
 function checkNameInput() {
   if (player1Input.validity.valueMissing) {
-    //shows up while typing until next input, fix that my moving to the input itself?
     player1Input.setCustomValidity("Please enter a name");
     player1Input.reportValidity();
   } else {
     showInstructions();
   }
-  // else if (player2Input.validity.valueMissing) {
-  //   player2Input.setCustomValidity("Please enter a name");
-  //   player2Input.reportValidity();
-  // }
 };
 
 function showInstructions(loadType) {
@@ -51,7 +46,7 @@ function showInstructions(loadType) {
     localStorage.setItem('player1Name', jsonObject);
   }
   player1Input.value = '';
-  instructionHeader.innerText = `Welcome ${player1Name} and Player 2 Name!`;
+  instructionHeader.innerText = `Welcome ${player1Name}!`;
   nameIntro.classList.add('hidden');
   instructions.classList.remove('hidden');
 };
@@ -87,7 +82,7 @@ function newGame() {
   localStorage.removeItem('player1Name');
   results.classList.add('hidden');
   nameIntro.classList.remove('hidden');
-}
+};
 
 function resetGameData() {
   deck = new Deck();
@@ -96,14 +91,10 @@ function resetGameData() {
   initialCardLoad();
   initialCardDisplay();
   fetchLeaderBoard();
-}
+};
 
 function storeLeaderBoard(name, time) {
-  var leaders = {
-    name:name,
-    time:time
-  }
-
+  var leaders = {name:name, time:time}
   var leaderJson = JSON.stringify(leaders);
   localStorage.setItem(leaders.name,leaderJson);
 };
@@ -114,11 +105,11 @@ function fetchLeaderBoard() {
     var fetchKey = localStorage.key(i);
     var fetchedLeader = JSON.parse(localStorage.getItem(fetchKey));
     if(fetchKey !== 'player1Name') {
-    leaderBoardData.push(fetchedLeader);
-    }
-  }
+      leaderBoardData.push(fetchedLeader);
+    };
+  };
   sortLeaderBoard();
-}
+};
 
 function sortLeaderBoard() {
   leaderBoardData.sort(function(a, b) {
@@ -130,7 +121,7 @@ function sortLeaderBoard() {
       return 0;
     }
   });
-}
+};
 
 function generateLeaderIndex() {
   if(leaderBoardData.length > 5) {
@@ -138,30 +129,31 @@ function generateLeaderIndex() {
   } else {
     return leaderBoardData.length;
   }
-}
+};
 
 function displayLeaderboard() {
   var leaderIndex = generateLeaderIndex();
   navLeaderboard.innerHTML = `<dl>
         <dt><h3>LEADERBOARD</h3></dt>`;
   for (var i = 0; i < leaderIndex; i++) {
-  navLeaderboard.innerHTML += `<dt>${leaderBoardData[i].name}</dt>
-      <dd>${leaderBoardData[i].time} SECONDS</dd>`;
+  navLeaderboard.innerHTML += `<dt>${leaderBoardData[i].name.toUpperCase()}</dt>
+      <dd>${leaderBoardData[i].time} SECONDS</dd>
+      </br>`;
     }
   navLeaderboard.innerHTML += `</dl>`;
-}
+};
 
 function calculateGameTime() {
   var gameEndTime = Date.now();
   return totalGameTime = Math.floor((gameEndTime - gameStartTime) / 1000);
-}
+};
 
 function formatTimeResult(time) {
   var minutes = Math.floor(totalGameTime / 60);
   var seconds = totalGameTime % 60;
 
   return `It took you ${minutes} minutes and ${seconds} seconds.`;
-}
+};
 
 function cardClickHandler(event) {
   if (event.target.parentNode.parentNode.classList.contains('card')) {
@@ -171,21 +163,20 @@ function cardClickHandler(event) {
     if (deck.selectedCards.length === 1 && (cardClicked !== deck.selectedCards[0].cardNum)) {
       event.target.parentNode.classList.add('flip');
       deck.addToSelected(cardClicked, clickedPairID);
-      //need to add a set timeout so the card doesn't remove immediately, have a 2 second pause
       var matchResult = deck.checkSelectedCards();
-      //this is refreshing page before second card gets chosen. need to rework.
-      if(matchResult) {
-        if(deck.matches === 5) {
-        showResult();
+        if(matchResult) {
+          if(deck.matches === 5) {
+            showResult();
+          } else {
+            setTimeout(function() {
+              cardRefresh()
+            }, 1000);
+          };
         } else {
-        cardRefresh();
-        }
-      } else {
-        setTimeout(function() {
-          resetCards(event)
-        }, 1000);
-      }
-
+          setTimeout(function() {
+            resetCards(event)
+          }, 1000);
+        };
     } else if (deck.selectedCards.length === 0) {
       deck.addToSelected(cardClicked, clickedPairID);
       event.target.parentNode.classList.add('flip');
@@ -199,31 +190,22 @@ function checkNamePersistence() {
   } else {
     return false;
   }
-}
+};
 
 function resetCards(event) {
-  //target whole card section
-  //iterate through cards (childreNode)
   var presentCards = cardSection.children;
   for (var i = 0; i < presentCards.length; i++) {
     if (presentCards[i].childNodes[1].classList.contains('flip')) {
       presentCards[i].childNodes[1].classList.remove('flip');
     }
   }
-  // event.target.parentNode.classList.add('flip-back');
-}
-
-function pickRandomNum(range) {
-  return Math.ceil(Math.random() * range);
-}
+};
 
 function generateCardIds(card, cardNum) {
-  // var randNum = pickRandomNum(10);
-  //this is creating a 0 and 5, not two 5s
   card.cardNum = cardNum;
   card.pairID = Math.ceil((cardNum+1)/2);
   card.cardBackground = mapCardBackgrounds(card.pairID);
-}
+};
 
 function mapCardBackgrounds(pairID) {
   switch(pairID) {
@@ -243,7 +225,7 @@ function mapCardBackgrounds(pairID) {
       return 'assets/muffin-8.jpeg';
       break;
   }
-}
+};
 
 function pageLoadHandler() {
   if(checkNamePersistence()) {
@@ -254,7 +236,7 @@ function pageLoadHandler() {
   initialCardDisplay();
   fetchLeaderBoard();
   displayLeaderboard()
-}
+};
 
 function initialCardLoad() {
   for(var i = 0; i < 10; i++) {
@@ -263,14 +245,14 @@ function initialCardLoad() {
     deck.cards.push(card);
   }
   deck.shuffle();
-}
+};
 
 function initialCardDisplay() {
   for(var i = 0; i < 10; i++) {
     var card = deck.cards[i];
     addCard(card, i);
   }
-}
+};
 
 function cardRefresh() {
   player1Matches.innerText = deck.matches;
@@ -282,7 +264,7 @@ function cardRefresh() {
       addCard(deck.cards[i], i);
     }
   }
-}
+};
 
 function addCard(card, index) {
   return cardSection.innerHTML +=

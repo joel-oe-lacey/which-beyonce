@@ -8,16 +8,14 @@ class Deck {
 
   shuffle() {
     var cards = this.cards, temporaryValue, randomIndex;
-
     for(var i = 9; i > 0; i--) {
       randomIndex = Math.floor(Math.random() * i);
       temporaryValue = cards[i];
       cards[i] = cards[randomIndex];
       cards[randomIndex] = temporaryValue;
     }
-
     this.cards = cards;
-  }
+  };
 
   checkSelectedCards() {
     if (this.selectedCards[0].pairID === this.selectedCards[1].pairID) {
@@ -38,11 +36,7 @@ class Deck {
  };
 
   moveToMatched(card1, card2) {
-    //make sure it can't matched with itself
     this.matchedCards.push(card1, card2);
-    //add class so it doesn't break card alignment, but then they can still target these cards?
-
-    //instead of doing this just remove card from card array and refresh whole DOM
     this.removeFromDeck(this.selectedCards[0]);
     this.removeFromDeck(this.selectedCards[1]);
     this.selectedCards = [];
@@ -50,7 +44,6 @@ class Deck {
   };
 
   removeFromDeck(removedCard) {
-    //instead of removing them totally, set their matched property to true, and then if the card.matched is true add but hide and set pointer events to none, so it cant be clicked on
     for (var i = 0; i < this.cards.length; i++) {
       if(this.cards[i].cardNum === removedCard.cardNum) {
         this.cards[i].match(true);
