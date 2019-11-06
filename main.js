@@ -15,6 +15,7 @@ var resultsHeader = document.querySelector('.results__header');
 var resultsTime = document.querySelector('.results__time');
 var newGameBtn = document.querySelector('.results__button--newgame');
 var rematchBtn = document.querySelector('.results__button--rematch');
+var navLeaderboard = document.querySelector('.nav__leaderboard');
 var deck = new Deck();
 var leaderBoardData = [];
 
@@ -110,8 +111,9 @@ function storeLeaderBoard(name, time) {
 function fetchLeaderBoard() {
   leaderBoardData = [];
   for (var i = 0; i < localStorage.length; i++) {
-    fetchedLeader = JSON.parse(localStorage.getItem(i));
-    if(fetchedLeader !== player1Name) {
+    var fetchKey = localStorage.key(i);
+    var fetchedLeader = JSON.parse(localStorage.getItem(fetchKey));
+    if(fetchKey !== 'player1Name') {
     leaderBoardData.push(fetchedLeader);
     }
   }
@@ -120,8 +122,33 @@ function fetchLeaderBoard() {
 
 function sortLeaderBoard() {
   leaderBoardData.sort(function(a, b) {
-    return parseInt(leaderBoardData.time) - parseInt(leaderBoardData.time);
+    if (a.time > b.time) {
+      return 1;
+    } else if (b.time > a.time) {
+      return -1;
+    } else {
+      return 0;
+    }
   });
+}
+
+function generateLeaderIndex() {
+  if(leaderBoardData.length > 5) {
+    return 5;
+  } else {
+    return leaderBoardData.length;
+  }
+}
+
+function displayLeaderboard() {
+  var leaderIndex = generateLeaderIndex();
+  navLeaderboard.innerHTML = `<dl>
+        <dt><h3>LEADERBOARD</h3></dt>`;
+  for (var i = 0; i < leaderIndex; i++) {
+  navLeaderboard.innerHTML += `<dt>${leaderBoardData[i].name}</dt>
+      <dd>${leaderBoardData[i].time} SECONDS</dd>`;
+    }
+  navLeaderboard.innerHTML += `</dl>`;
 }
 
 function calculateGameTime() {
@@ -205,6 +232,7 @@ function pageLoadHandler() {
   initialCardLoad();
   initialCardDisplay();
   fetchLeaderBoard();
+  displayLeaderboard()
 }
 
 function initialCardLoad() {
