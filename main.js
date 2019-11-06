@@ -222,6 +222,27 @@ function generateCardIds(card, cardNum) {
   //this is creating a 0 and 5, not two 5s
   card.cardNum = cardNum;
   card.pairID = Math.ceil((cardNum+1)/2);
+  card.cardBackground = mapCardBackgrounds(card.pairID);
+}
+
+function mapCardBackgrounds(pairID) {
+  switch(pairID) {
+    case 1:
+      return 'assets/chihuahua-1.jpg';
+      break;
+    case 2:
+      return 'assets/chihuahua-3.jpg';
+      break;
+    case 3:
+      return 'assets/muffin-3.jpeg';
+      break;
+    case 4:
+      return 'assets/chihuahua-4.jpg';
+      break;
+    case 5:
+      return 'assets/muffin-8.jpeg';
+      break;
+  }
 }
 
 function pageLoadHandler() {
@@ -268,10 +289,8 @@ function addCard(card, index) {
         `<div class="card card-${index}" data-cardnum=${card.cardNum} data-pairid=${card.pairID}>
           <div class="card-inner">
             <div class="card-front">
-            <p>${card.cardNum}</p>
-            <p>${card.pairID}</p>
             </div>
-            <div class="card-back">
+            <div class="card-back" style=\"background-image: url(${card.cardBackground});\">
             </div>
           </div>
         </div>`
@@ -282,10 +301,8 @@ function addHiddenCard(card, index) {
         `<div class="card card-${index} no-display" data-cardNum=${card.cardNum} data-pairId=${card.pairID}>
           <div class="card-inner">
             <div class="card-front">
-            <p>${card.cardNum}</p>
-            <p>${card.pairID}</p>
             </div>
-            <div class="card-back">
+            <div class="card-back" style="background-image: url(${card.cardBackground});">
             </div>
           </div>
         </div>`

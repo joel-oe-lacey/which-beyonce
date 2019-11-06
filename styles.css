@@ -189,7 +189,6 @@ nav div button {
 }
 
 .card {
-  border: 2px solid black;
   background-color: transparent;
   perspective: 1000px;
   height: 22vh;
@@ -198,6 +197,7 @@ nav div button {
 }
 
 .card-inner {
+  border: 2px solid black;
   position: relative;
   width: 100%;
   height: 100%;
@@ -222,7 +222,7 @@ nav div button {
 }
 
 .card-front {
-  /* background-image: url("assets/muffin.svg"); */
+  background-image: url("assets/muffin.svg");
   background-position: center;
   background-repeat: no-repeat;
 }
