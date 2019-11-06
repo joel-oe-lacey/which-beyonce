@@ -10,7 +10,16 @@
   <body>
     <nav class="nav">
       <!-- refactor to margin auto, and then float or absolute position button on left -->
-      <button class="nav__button" type="button" name="button"></button>
+      <div class="nav__dropdown">
+        <button class="nav__button" type="button" name="button"></button>
+        <div class="nav__leaderboard">
+          <dl>
+            <dt><h3>LEADERBOARD</h3></dt>
+            <dt>No Players</dt>
+            <dd>Have Played Yet</dd>
+          </dl>
+        </div>
+      </div>
       <h1 class="nav__header">Which Muffin?</h1>
     </nav>
     <div class="center">

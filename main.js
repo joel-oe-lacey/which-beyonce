@@ -13,10 +13,16 @@ var player1Matches = document.querySelector('.player1__matches');
 var results = document.querySelector('.results');
 var resultsHeader = document.querySelector('.results__header');
 var resultsTime = document.querySelector('.results__time');
+var newGameBtn = document.querySelector('.results__button--newgame');
+var rematchBtn = document.querySelector('.results__button--rematch');
+var navLeaderboard = document.querySelector('.nav__leaderboard');
 var deck = new Deck();
+var leaderBoardData = [];
 
 playerSubmit.addEventListener('click', checkNameInput);
 instructionPlay.addEventListener('click', showGame);
+newGameBtn.addEventListener('click', newGame);
+rematchBtn.addEventListener('click', rematch);
 cardSection.addEventListener('click', function() {
   cardClickHandler(event);
 });
@@ -36,8 +42,15 @@ function checkNameInput() {
   // }
 };
 
-function showInstructions() {
-  player1Name = player1Input.value;
+function showInstructions(loadType) {
+  if(checkNamePersistence()) {
+    player1Name = JSON.parse(localStorage.getItem('player1Name'));
+  } else {
+    player1Name = player1Input.value;
+    var jsonObject = JSON.stringify(player1Name);
+    localStorage.setItem('player1Name', jsonObject);
+  }
+  player1Input.value = '';
   instructionHeader.innerText = `Welcome ${player1Name} and Player 2 Name!`;
   nameIntro.classList.add('hidden');
   instructions.classList.remove('hidden');
@@ -52,17 +65,98 @@ function showGame() {
 };
 
 function showResult() {
-  resultsTime.innerText = calculateGameTime();
+  var roundTime = calculateGameTime();
+  resultsTime.innerText = formatTimeResult(roundTime);
   resultsHeader.innerText = `Congratulations, ${player1Name} wins!`;
+  storeLeaderBoard(player1Name,roundTime);
   game.classList.add('hidden');
   centerDiv.classList.remove('hidden');
   results.classList.remove('hidden');
+};
+
+function rematch() {
+  resetGameData();
+  gameStartTime = Date.now();
+  results.classList.add('hidden');
+  centerDiv.classList.add('hidden');
+  game.classList.remove('hidden');
+};
+
+function newGame() {
+  resetGameData();
+  localStorage.removeItem('player1Name');
+  results.classList.add('hidden');
+  nameIntro.classList.remove('hidden');
+}
+
+function resetGameData() {
+  deck = new Deck();
+  cardSection.innerHTML = '';
+  player1Matches.innerText = 0;
+  initialCardLoad();
+  initialCardDisplay();
+  fetchLeaderBoard();
+}
+
+function storeLeaderBoard(name, time) {
+  var leaders = {
+    name:name,
+    time:time
+  }
+
+  var leaderJson = JSON.stringify(leaders);
+  localStorage.setItem(leaders.name,leaderJson);
+};
+
+function fetchLeaderBoard() {
+  leaderBoardData = [];
+  for (var i = 0; i < localStorage.length; i++) {
+    var fetchKey = localStorage.key(i);
+    var fetchedLeader = JSON.parse(localStorage.getItem(fetchKey));
+    if(fetchKey !== 'player1Name') {
+    leaderBoardData.push(fetchedLeader);
+    }
+  }
+  sortLeaderBoard();
+}
+
+function sortLeaderBoard() {
+  leaderBoardData.sort(function(a, b) {
+    if (a.time > b.time) {
+      return 1;
+    } else if (b.time > a.time) {
+      return -1;
+    } else {
+      return 0;
+    }
+  });
+}
+
+function generateLeaderIndex() {
+  if(leaderBoardData.length > 5) {
+    return 5;
+  } else {
+    return leaderBoardData.length;
+  }
+}
+
+function displayLeaderboard() {
+  var leaderIndex = generateLeaderIndex();
+  navLeaderboard.innerHTML = `<dl>
+        <dt><h3>LEADERBOARD</h3></dt>`;
+  for (var i = 0; i < leaderIndex; i++) {
+  navLeaderboard.innerHTML += `<dt>${leaderBoardData[i].name}</dt>
+      <dd>${leaderBoardData[i].time} SECONDS</dd>`;
+    }
+  navLeaderboard.innerHTML += `</dl>`;
 }
 
 function calculateGameTime() {
   var gameEndTime = Date.now();
-  var totalGameTime = Math.floor((gameEndTime - gameStartTime) / 1000);
+  return totalGameTime = Math.floor((gameEndTime - gameStartTime) / 1000);
+}
 
+function formatTimeResult(time) {
   var minutes = Math.floor(totalGameTime / 60);
   var seconds = totalGameTime % 60;
 
@@ -99,17 +193,13 @@ function cardClickHandler(event) {
   }
 }
 
-// function pairHandler(matchResult, event) {
-//   if(matchResult) {
-//     //this would only remove most recent card
-//     //go the route of refreshing whole card HTML?
-//     event.target.parentNode.parentNode.remove();
-//   } else {
-//     //reverse target items on the DOM based on whats in matchedCards array?
-//     //if you get that working don't need to refresh whole HTML.
-//   }
-//
-// }
+function checkNamePersistence() {
+  if(localStorage.getItem('player1Name')) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 function resetCards(event) {
   //target whole card section
@@ -135,8 +225,14 @@ function generateCardIds(card, cardNum) {
 }
 
 function pageLoadHandler() {
+  if(checkNamePersistence()) {
+    showInstructions();
+  }
+  player1Matches.innerText = 0;
   initialCardLoad();
   initialCardDisplay();
+  fetchLeaderBoard();
+  displayLeaderboard()
 }
 
 function initialCardLoad() {
