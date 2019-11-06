@@ -3,7 +3,7 @@ class Card {
     this.cardNum = cardNum;
     this.pairID = pairID;
     this.matched = false;
-    this.cardBackground = "";
+    this.cardBackground;
   }
 
   match(isMatched) {
